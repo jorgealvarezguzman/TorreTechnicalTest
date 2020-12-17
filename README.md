@@ -4,7 +4,7 @@
 11:50 - read specifications \
 12:10 - set up Git repo \
 15:00 - set up initial flask app \
-17:00 - test routes \
+17:00 - test routes
 
 ## Tuesday, December 15, 2020
 10:00 - 15:00  - development
