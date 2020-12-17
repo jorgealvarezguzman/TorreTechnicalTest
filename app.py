@@ -37,5 +37,3 @@ def test():
     req = requests.post('https://search.torre.co/opportunities/_search/?offset=0&size=10&aggregate=false', json = {"test": "test"})
     data = req.json()
     return render_template('index.html', data=data['results'])
-
-    
