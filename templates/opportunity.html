@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<!-- Search form -->
+<form action="{{url_for('getOportunities')}}" method = "post">
+  <div class="active-purple-3 active-purple-4 mb-4">
+      <input name="search" class="form-control" type="text" placeholder="Search" aria-label="Search">
+  </div>
+</form>
+
+<!-- tiles -->
+<div class="card-columns">
+    {% for opportunity in opportunities %}
+    <div class="card">
+      <img class="card-img-top" src=" {{ opportunity['organizations'][0]['picture'] }} " alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title"> {{ opportunity['objective'] }} </h5>
+        <p class="card-text">
+          <ul style="list-style-type:none">
+              <li>{{ opportunity['type'] }}</li>
+              <li><p class="list-group-item-warning">{{ opportunity['organizations'][0]['name'] }}</p></li>
+              <li>{% if opportunity['remote'] == True %}Remote - {% endif %}{{ opportunity['locations'][0] }}</li>
+              <li><h5>{{ opportunity['compensation']['data']['currency'] }}{{ opportunity['compensation']['data']['minAmount'] }}-{{ opportunity['compensation']['data']['maxAmount'] }}  {{ opportunity['compensation']['data']['periodicity'] }}</h5></li>
+              <li>Team Members: 
+                {% for member in opportunity['members'] %}
+                    {{ member['name'] }} 
+                {%  endfor %}
+              </li>
+              <li>
+                {% for skill in opportunity['skills'] %}
+                    <p class="list-group-item-primary">{{ skill['name'] }}</p>
+                {%  endfor %}
+              </li>
+              <li>
+                {% if opportunity['status'] == 'open' %}
+                    <!-- Display the countdown timer in an element -->
+                    <p id="{{ opportunity['id'] }}" value = "{{ opportunity['deadline'] }}" class = "timer list-group-item-danger"></p>
+
+                    <script>
+                        setClock("{{ opportunity['deadline'] }}", "{{ opportunity['id'] }}");
+                    </script>
+                {% else %}
+                    Closed
+                {% endif %}
+              </li>
+              
+          </ul>
+        </p>
+        <a href="..." class="stretched-link"></a>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
